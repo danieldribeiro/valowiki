@@ -1,14 +1,19 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './containers/Header/Header'
-import Hero from './components/Hero/Hero'
+import Home from './pages/Home'
+import Agents from './pages/Agents'
 
 function App() {
 
   return (
-    <>
-      <Header></Header>
-      <Hero></Hero>
-    </>
-  )
+    <Router>
+      <Header/>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path="/Agents" element={<Agents/>} />
+        </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
