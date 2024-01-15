@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import Agents from '../../components/Agents/Agents'
 import Hero from '../../components/Hero/Hero'
+import Agents from '../../components/Agents/Agents'
 
 const Main = ({ page }) => {
     let content;
