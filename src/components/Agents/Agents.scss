@@ -1,8 +1,9 @@
 .main-agents{
     width: 100vw;
-    height: 70vh;
+    height: calc(90vh - 80px);
     position: relative;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
     
     video{
         width: 100%;
@@ -10,22 +11,5 @@
         object-fit: cover;
         position: absolute;
         z-index: -1;
-    }
-    
-    h1{
-        color: #fff;
-    }
-
-    .slider{
-        height: 100%;
-    }
-
-    .slider-wrapper{
-        width: 100px;
-        height: 92%;
-        position: absolute;
-        left: 20%;
-        top: 4%;
-        overflow: hidden;
     }
 }

@@ -1,83 +1,65 @@
-import { Component } from "react";
+import { Component, createRef  } from "react";
 import Slider from "react-slick";
-import './AgentSlides.scss'
+import './AgentsSlider.scss'
 
-export default class VerticalMode extends Component {
+export default class VerticalSwipeToSlide extends Component {
+    constructor(props) {
+        super(props);
+
+        this.sliderRef = createRef();
+        this.endpoint = 'https://valorant-api.com/v1/agents?isPlayableCharacter=true';
+
+        this.state = {
+            agentsData: [],
+        };
+    }
+
+    componentDidMount() {
+        fetch(this.endpoint)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                this.setState({ agentsData: data.data });
+                console.log(data.data)
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    }    
+
+    handleSlideClick = (e) => {
+        console.log(e)
+    }
 
     render() {
+        const { agentsData } = this.state;
+
         const settings = {
             className: 'slider',
             dots: false,
             infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            draggable: true,
-            centerCurrentSlide: true,
+            slidesToShow: 5,
+            slidesToScroll: 1,
             vertical: true,
             verticalSwiping: true,
+            swipeToSlide: true,
             arrows: false,
-            pauseOnFocus: true,
         }
 
         return (
         <div>
-            <Slider {...settings} is="slider">
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/astrapng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/breachpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/brimpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/cyphepng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/jettpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/kayopng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/kjpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/omenpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/phopng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/razepng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/reynapng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/sagepng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/skyepng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/spvapng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/viperpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/yorupng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/zz1643674990chamberpng.png" alt="" />
-            </div>
-            <div className="image-container">
-                <img src="https://tiermaker.com/images/chart/chart/valorant-agents-up-to-kay-o-june-2021-1157801/zz1646138299neonpng.png" alt="" />
-            </div>
+            <Slider {...settings}>
+                {agentsData.map((agent, e) => (
+                    <div key={agent.uuid} className="image-container" onClick={() => this.handleSlideClick(e)}>
+                        <h2>{agent.displayName}</h2>
+                    </div>
+                ))}
             </Slider>
         </div>
-        );
+        )
     }
 }
