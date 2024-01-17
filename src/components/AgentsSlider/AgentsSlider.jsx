@@ -1,65 +1,74 @@
-import { Component, createRef  } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useRef, useEffect } from "react";
 import Slider from "react-slick";
-import './AgentsSlider.scss'
+import './AgentsSlider.scss';
 
-export default class VerticalSwipeToSlide extends Component {
-    constructor(props) {
-        super(props);
+const VerticalSwipeToSlide = ({ agentData, onAgentClick }) => {
+    const sliderRef = useRef(null);
 
-        this.sliderRef = createRef();
-        this.endpoint = 'https://valorant-api.com/v1/agents?isPlayableCharacter=true';
-
-        this.state = {
-            agentsData: [],
-        };
-    }
-
-    componentDidMount() {
-        fetch(this.endpoint)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Erro na requisição: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                this.setState({ agentsData: data.data });
-                console.log(data.data)
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
-    }    
-
-    handleSlideClick = (e) => {
-        console.log(e)
-    }
-
-    render() {
-        const { agentsData } = this.state;
-
-        const settings = {
-            className: 'slider',
-            dots: false,
-            infinite: true,
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            vertical: true,
-            verticalSwiping: true,
-            swipeToSlide: true,
-            arrows: false,
+    useEffect(() => {
+        // Seleciona o primeiro agente ao montar o componente
+        if (agentData.length > 0) {
+            const firstAgent = agentData[0];
+            onAgentClick(firstAgent);
+            styleAgent(firstAgent);
         }
+    }, [agentData, onAgentClick]);
 
-        return (
+    const changeTextColor = () => {
+        const agentNames = document.querySelectorAll('.agent-name');
+
+        for (const otherAgent of agentNames) {
+            otherAgent.style.color = '';
+            otherAgent.style.marginLeft = '0';
+        }
+    };
+
+    const styleAgent = (agent) => {
+        const agentElement = document.querySelector(`.agent-name[data-uuid="${agent.uuid}"]`);
+        if (agentElement) {
+            agentElement.style.color = '#ce5f4b';
+            agentElement.style.marginLeft = '20px';
+        }
+    };
+
+    const handleAgentClick = (e, agent) => {
+        changeTextColor();
+        e.target.style.color = '#ce5f4b';
+        e.target.style.marginLeft = '20px';
+        onAgentClick(agent);
+    };
+
+    const settings = {
+        className: 'slider',
+        dots: false,
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        vertical: true,
+        verticalSwiping: true,
+        swipeToSlide: true,
+        arrows: false,
+    };
+
+    return (
         <div>
-            <Slider {...settings}>
-                {agentsData.map((agent, e) => (
-                    <div key={agent.uuid} className="image-container" onClick={() => this.handleSlideClick(e)}>
-                        <h2>{agent.displayName}</h2>
+            <Slider {...settings} ref={sliderRef}>
+                {agentData.map((agent) => (
+                    <div key={agent.uuid} className="image-container">
+                        <h2
+                            className="agent-name"
+                            data-uuid={agent.uuid}
+                            onClick={(e) => handleAgentClick(e, agent)}
+                        >
+                            {agent.displayName}
+                        </h2>
                     </div>
                 ))}
             </Slider>
         </div>
-        )
-    }
-}
+    );
+};
+
+export default VerticalSwipeToSlide;

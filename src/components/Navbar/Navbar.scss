@@ -1,15 +1,24 @@
 .navbar{
-    width: 60%;
+    width: 70%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 10px;
+
+    @media screen and (max-width: 1440px) {
+        width: 80%;
+    }
 
     .logo{
         width: 50px;
 
         &:hover{
             filter: drop-shadow(0 0 10px #ffffff8c);
+        }
+
+        @media screen and (max-width: 1440px) {
+            width: 40px;
         }
     }
 
@@ -21,6 +30,7 @@
         position: relative;
         display: inline-block;
         padding-bottom: 3px;
+        font-size: 1.8em;
 
         &:after {
             content: '';
@@ -35,6 +45,10 @@
 
         &:hover:after {
             width: 100%;
+        }
+
+        @media screen and (max-width: 1440px) {
+            font-size: 1.5em;
         }
     }
 
