@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+.slider{
+    width: 100%;
+    height: auto;
+    font-size: 10px;
+    animation: slidePreview 2s ease-in-out;
+
+    @keyframes slidePreview {
+        10%{
+            transform: translateY(-10px);
+        }
+        30%{
+            transform: translateY(10px);
+        }
+        40%{
+            transform: translateY(-10px);
+        }
+        70%{
+            transform: translateY(10px);
+        }
+    }
+
+    h2{
+        color: #fff;
+        font-size: 10em;
+        text-transform: uppercase;
+        font-family: 'Oswald', sans-serif;
+        line-height: 100px;
+        transition: .2s ease-in-out;
+        letter-spacing: -5px;
+        cursor: pointer;
+
+        &:hover{
+            margin-left: 20px;
+        }
+
+        &:active{
+            color: #ce5f4b;
+        }
+
+        @media screen and (max-width: 1440px) {
+            font-size: 6em;
+            line-height: 60px;
+        }
+    }
+}
