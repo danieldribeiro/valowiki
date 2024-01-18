@@ -40,6 +40,12 @@ const VerticalSwipeToSlide = ({ agentData, onAgentClick }) => {
         onAgentClick(agent);
     };
 
+    let count = 0
+    const setAgentNumber = () => {
+        count += 1
+        return count
+    }
+
     const settings = {
         className: 'slider',
         dots: false,
@@ -56,7 +62,8 @@ const VerticalSwipeToSlide = ({ agentData, onAgentClick }) => {
         <div>
             <Slider {...settings} ref={sliderRef}>
                 {agentData.map((agent) => (
-                    <div key={agent.uuid} className="image-container">
+                    <div key={agent.uuid} className="agent-name-container">
+                        <span className="agent-number">{setAgentNumber()}</span>
                         <h2
                             className="agent-name"
                             data-uuid={agent.uuid}

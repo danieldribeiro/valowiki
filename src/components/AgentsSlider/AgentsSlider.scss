@@ -5,6 +5,7 @@
     height: auto;
     font-size: 10px;
     animation: slidePreview 2s ease-in-out;
+    font-family: 'Oswald', sans-serif;
 
     @keyframes slidePreview {
         10%{
@@ -25,7 +26,6 @@
         color: #fff;
         font-size: 10em;
         text-transform: uppercase;
-        font-family: 'Oswald', sans-serif;
         line-height: 100px;
         transition: .2s ease-in-out;
         letter-spacing: -5px;
@@ -42,6 +42,23 @@
         @media screen and (max-width: 1440px) {
             font-size: 6em;
             line-height: 60px;
+        }
+    }
+
+    .agent-name-container{
+        position: relative;
+        padding-left: 15px;
+
+        .agent-number{
+            position: absolute;
+            top: 5px;
+            left: 0px;
+            color: #ffffffb0;
+            font-size: 1.8em;
+
+            @media screen and (max-width: 1440px) {
+                font-size: 1.2em;
+            }
         }
     }
 }

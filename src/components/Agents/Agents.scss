@@ -1,10 +1,14 @@
 .main-agents{
     width: 100dvw;
-    height: calc(90dvh - 80px);
+    height: calc(100dvh - 80px);
     position: relative;
     display: flex;
     align-items: center;
     padding: 10% 15%;
+
+    @media screen and (max-width:1440px) {
+        padding: 10% 10%;
+    }
     
     video{
         width: 100%;
@@ -19,6 +23,7 @@
     .agents-wrapper{
         width: 100%;
         display: flex;
+        align-items: center;
     }
 
     .slider-wrapper{
